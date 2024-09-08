@@ -1,0 +1,9 @@
+apiVersion: core.choreo.dev/v1beta1
+kind: ComponentConfig
+spec:
+  inbound:
+    - name: Pizzashack API
+      port: 8080
+      type: REST
+      networkVisibility: Public
+      schemaFilePath: open-api.yaml
