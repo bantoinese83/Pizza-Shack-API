@@ -1,17 +1,17 @@
-from typing import List, Optional
+# models/user.py
+from sqlalchemy import Column, Integer, String, Boolean
 
-from pydantic import BaseModel, Field
-
-
-class User(BaseModel):
-    id: int = Field(..., example=1)
-    name: str = Field(..., example="John Doe")
-    email: str = Field(..., example="john.doe@example.com")
-    phone: Optional[str] = Field(default=None, example="123-456-7890")
-    address: Optional[str] = Field(default=None, example="123 Main St")
-    is_active: bool = Field(default=True, example=True)
-    created_at: str = Field(..., example="2023-10-01")
-    rewards_points: int = Field(..., ge=0, example=100)
+from core.database import Base
 
 
-users: List[User] = []
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String, index=True)
+    email = Column(String, unique=True, index=True)
+    phone = Column(String, index=True, nullable=True)
+    address = Column(String, index=True, nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(String)
+    rewards_points = Column(Integer, default=0)

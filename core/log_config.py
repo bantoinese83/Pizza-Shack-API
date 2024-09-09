@@ -1,3 +1,4 @@
+import asyncio
 import sys
 from functools import wraps
 
@@ -29,13 +30,23 @@ def log(level, message):
 def log_decorator(level="INFO"):
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs):
+            log(level, f"Calling function {func.__name__}")
+            result = await func(*args, **kwargs)
+            log(level, f"Function {func.__name__} completed")
+            return result
+
+        @wraps(func)
+        def sync_wrapper(*args, **kwargs):
             log(level, f"Calling function {func.__name__}")
             result = func(*args, **kwargs)
             log(level, f"Function {func.__name__} completed")
             return result
 
-        return wrapper
+        if asyncio.iscoroutinefunction(func):
+            return async_wrapper
+        else:
+            return sync_wrapper
 
     return decorator
 
@@ -44,7 +55,20 @@ def log_decorator(level="INFO"):
 def spinner_decorator(text="Processing"):
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs):
+            spinner = Halo(text=text, spinner='dots')
+            spinner.start()
+            try:
+                result = await func(*args, **kwargs)
+                spinner.succeed("Done")
+                return result
+            except Exception as e:
+                spinner.fail("Failed")
+                log("ERROR", f"An error occurred: {e}")
+                raise e
+
+        @wraps(func)
+        def sync_wrapper(*args, **kwargs):
             spinner = Halo(text=text, spinner='dots')
             spinner.start()
             try:
@@ -56,6 +80,9 @@ def spinner_decorator(text="Processing"):
                 log("ERROR", f"An error occurred: {e}")
                 raise e
 
-        return wrapper
+        if asyncio.iscoroutinefunction(func):
+            return async_wrapper
+        else:
+            return sync_wrapper
 
     return decorator

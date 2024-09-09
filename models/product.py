@@ -1,17 +1,16 @@
-from typing import List, Optional
+from sqlalchemy import Column, Integer, String, Float, Boolean
 
-from pydantic import BaseModel, Field
-
-
-class Product(BaseModel):
-    id: int = Field(..., example=1)
-    name: str = Field(..., example="Pizza")
-    price: float = Field(..., gt=0, example=9.99)
-    stock: int = Field(..., ge=0, example=10)
-    description: str = Field(..., example="Delicious cheese pizza")
-    category: str = Field(..., example="Food")
-    is_available: bool = Field(default=True, example=True)
-    tags: Optional[List[str]] = Field(default=None, example=["cheese", "vegetarian"])
+from core.database import Base
 
 
-products: List[Product] = []
+class Product(Base):
+    __tablename__ = "products"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    price = Column(Float)
+    stock = Column(Integer)
+    description = Column(String)
+    category = Column(String)
+    is_available = Column(Boolean, default=True)
+    tags = Column(String, nullable=True)  # Store tags as a comma-separated string

@@ -1,19 +1,19 @@
-from typing import Optional
+# models/menu.py
+from sqlalchemy import Column, Integer, String, Float, Boolean
 
-from pydantic import BaseModel, Field
-
-
-class MenuItem(BaseModel):
-    id: int = Field(default=None, example=1)
-    name: str = Field(..., example="Margherita")
-    description: str = Field(..., example="Classic cheese and tomato pizza")
-    price: float = Field(..., gt=0, example=9.99)
-    category: str = Field(..., example="Pizza")
-    is_vegetarian: bool = Field(default=False, example=True)
-    calories: Optional[int] = Field(default=None, example=250)
-    is_gluten_free: bool = Field(default=False, example=False)
-    is_spicy: bool = Field(default=False, example=False)
-    is_available: bool = Field(default=True, example=True)
+from core.database import Base
 
 
-menu_items: list[MenuItem] = []
+class MenuItem(Base):
+    __tablename__ = "menu_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(String)
+    price = Column(Float)
+    category = Column(String)
+    is_vegetarian = Column(Boolean, default=False)
+    calories = Column(Integer, nullable=True)
+    is_gluten_free = Column(Boolean, default=False)
+    is_spicy = Column(Boolean, default=False)
+    is_available = Column(Boolean, default=True)
