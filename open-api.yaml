@@ -1,0 +1,479 @@
+openapi: 3.0.0
+info:
+  title: Pizza-Shack API
+  description: API for Pizza Shack, a pizza delivery service. This API allows users to browse the menu, place orders, manage products, and handle user accounts.
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000
+paths:
+  /api/menu:
+    get:
+      summary: Fetch all menu items
+      tags:
+        - menu
+      responses:
+        '200':
+          description: A list of menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+    post:
+      summary: Add a new menu item
+      tags:
+        - menu
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      responses:
+        '200':
+          description: The created menu item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+  /api/menu/{item_id}:
+    get:
+      summary: Fetch menu item by ID
+      tags:
+        - menu
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The menu item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+    put:
+      summary: Update menu item by ID
+      tags:
+        - menu
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      responses:
+        '200':
+          description: The updated menu item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+    delete:
+      summary: Delete menu item by ID
+      tags:
+        - menu
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The deleted menu item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+  /api/orders:
+    get:
+      summary: Fetch all orders
+      tags:
+        - orders
+      responses:
+        '200':
+          description: A list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      summary: Create a new order
+      tags:
+        - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: The created order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /api/orders/{order_id}:
+    get:
+      summary: Fetch order by ID
+      tags:
+        - orders
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    put:
+      summary: Update order by ID
+      tags:
+        - orders
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: The updated order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    delete:
+      summary: Delete order by ID
+      tags:
+        - orders
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The deleted order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /api/products:
+    get:
+      summary: Fetch all products
+      tags:
+        - products
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      summary: Create a new product
+      tags:
+        - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: The created product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /api/products/{product_id}:
+    get:
+      summary: Fetch product by ID
+      tags:
+        - products
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    put:
+      summary: Update product by ID
+      tags:
+        - products
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: The updated product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      summary: Delete product by ID
+      tags:
+        - products
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The deleted product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /api/users:
+    get:
+      summary: Fetch all users
+      tags:
+        - users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: The created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/users/{user_id}:
+    get:
+      summary: Fetch user by ID
+      tags:
+        - users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: Update user by ID
+      tags:
+        - users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: The updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete user by ID
+      tags:
+        - users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The deleted user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Margherita
+        description:
+          type: string
+          example: Classic cheese and tomato pizza
+        price:
+          type: number
+          format: float
+          example: 9.99
+        category:
+          type: string
+          example: Pizza
+        is_vegetarian:
+          type: boolean
+          example: true
+        calories:
+          type: integer
+          example: 250
+        is_gluten_free:
+          type: boolean
+          example: false
+        is_spicy:
+          type: boolean
+          example: false
+        is_available:
+          type: boolean
+          example: true
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 1
+        product_ids:
+          type: array
+          items:
+            type: integer
+          example: [1, 2]
+        total_price:
+          type: number
+          format: float
+          example: 19.98
+        status:
+          type: string
+          example: Pending
+        delivery_address:
+          type: string
+          example: 123 Pizza Street
+        order_date:
+          type: string
+          example: 2023-10-01
+        delivery_date:
+          type: string
+          example: 2023-10-02
+        rewards_points_used:
+          type: integer
+          example: 10
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Pizza
+        price:
+          type: number
+          format: float
+          example: 9.99
+        stock:
+          type: integer
+          example: 10
+        description:
+          type: string
+          example: Delicious cheese pizza
+        category:
+          type: string
+          example: Food
+        is_available:
+          type: boolean
+          example: true
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["cheese", "vegetarian"]
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        phone:
+          type: string
+          example: 123-456-7890
+        address:
+          type: string
+          example: 123 Main St
+        is_active:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: 2023-10-01
+        rewards_points:
+          type: integer
+          example: 100

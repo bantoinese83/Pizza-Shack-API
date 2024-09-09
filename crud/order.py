@@ -54,7 +54,8 @@ def update_order(db: Session, order_id: int, order: OrderSchema):
         db.commit()
         db.refresh(db_order)
         # Convert product_ids string back to a list before returning
-        db_order.product_ids = list(map(int, db_order.product_ids.split(',')))
+        if isinstance(db_order.product_ids, str):
+            db_order.product_ids = list(map(int, db_order.product_ids.split(',')))
     return db_order
 
 
@@ -64,3 +65,7 @@ def delete_order(db: Session, order_id: int):
         db.delete(db_order)
         db.commit()
     return db_order
+
+
+def get_past_orders(db: Session):
+    return db.query(Order).all()

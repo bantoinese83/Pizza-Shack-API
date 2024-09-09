@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from core.database import Base
+from core.log_config import log
 
 
 class Order(Base):
@@ -12,7 +13,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    product_ids = Column(String)  # Store as comma-separated string
+    product_ids = Column(String, nullable=False)
     total_price = Column(Float)
     status = Column(String)
     delivery_address = Column(String)
@@ -26,4 +27,8 @@ class Order(Base):
         self.product_ids = json.dumps(product_ids_list)
 
     def get_product_ids(self):
-        return json.loads(self.product_ids)
+        try:
+            return json.loads(self.product_ids)
+        except json.JSONDecodeError as e:
+            log("ERROR", f"Error decoding product_ids for order {self.id}: {e}")
+            return []
