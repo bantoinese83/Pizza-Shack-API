@@ -75,5 +75,11 @@ Pizza-Shack API is a RESTful API for Pizza Shack, a pizza delivery service. This
 - **PUT** `/api/users/{user_id}`: Update user by ID
 - **DELETE** `/api/users/{user_id}`: Delete user by ID
 
+### 🔍 Recommendations
+- **GET** `/api/recommendations`: Get product recommendations based on past orders
+- **GET** `/api/recommendations/user/{user_id}`: Get product recommendations for a specific user
+- **GET** `/api/recommendations/product/{product_id}`: Get product recommendations based on a specific product
+- **GET** `/api/recommendations/category/{category}`: Get product recommendations based on a specific category
+
 ## 📜 License
 This project is licensed under the MIT License.
