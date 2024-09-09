@@ -24,7 +24,7 @@ Pizza-Shack API is a RESTful API for Pizza Shack, a pizza delivery service. This
 1. Clone the repository:
     ```sh
     git clone https://github.com/bantoinese83/pizza-shack-api.git
-    cd pizza-shack-api
+    cd pizzashack-api
     ```
 2. Create a virtual environment and activate it:
     ```sh
